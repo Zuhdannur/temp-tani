@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubAnggaran;
+use App\Models\DetailAnggaran;
 use Illuminate\Http\Request;
 
-class SubAnggaranController extends Controller
+class DetailAnggaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class SubAnggaranController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SubAnggaran  $subAnggaran
+     * @param  \App\Models\DetailAnggaran  $detailAnggaran
      * @return \Illuminate\Http\Response
      */
-    public function show(SubAnggaran $subAnggaran)
+    public function show(DetailAnggaran $detailAnggaran)
     {
         //
     }
@@ -52,10 +52,10 @@ class SubAnggaranController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SubAnggaran  $subAnggaran
+     * @param  \App\Models\DetailAnggaran  $detailAnggaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubAnggaran $subAnggaran)
+    public function edit(DetailAnggaran $detailAnggaran)
     {
         //
     }
@@ -64,10 +64,10 @@ class SubAnggaranController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubAnggaran  $subAnggaran
+     * @param  \App\Models\DetailAnggaran  $detailAnggaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubAnggaran $subAnggaran)
+    public function update(Request $request, DetailAnggaran $detailAnggaran)
     {
         //
     }
@@ -75,10 +75,10 @@ class SubAnggaranController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubAnggaran  $subAnggaran
+     * @param  \App\Models\DetailAnggaran  $detailAnggaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubAnggaran $subAnggaran)
+    public function destroy(DetailAnggaran $detailAnggaran)
     {
         //
     }
