@@ -15,7 +15,6 @@ class CreateKebunsTable extends Migration
     {
         Schema::create('kebun', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
             $table->unsignedInteger('id_jenistanaman')->nullable();
             $table->string('nama_kebun', 30);
             $table->string('provinsi', 25);

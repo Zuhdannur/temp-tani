@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kebun;
+use App\Models\Kebun as Model;
 use Illuminate\Http\Request;
+use App\Lib\Response;
 
 class KebunController extends Controller
 {
@@ -35,7 +36,24 @@ class KebunController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            'nama_kebun' => 'required',
+            'alamat' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'id_jenistanaman' => 'required',
+            'luas_lahan' => 'required',
+            'jarak_tanam' => 'required',
+            'waktu_penanaman' => 'required',
+            'hasil_panen_per_ubin' => 'required',
+            'harga_satuan_per_hasil_panen' => 'required'
+        ]);
+        if ($validation->fails()) return Response::error('Please fulfill the form properly!', ['validation' => $validation->errors()]);
+
+        $input['id_user'] = $request->authenticatedUser->id;
+        $kebun = Model::create($input);
+        return Response::success('Kebun berhasil dibuat!', $kebun);
     }
 
     /**

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kebun extends Model
 {
     use HasFactory;
+
+    protected $table = 'kebun';
+    protected $guarded = [];
 }
