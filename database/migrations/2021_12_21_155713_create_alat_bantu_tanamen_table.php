@@ -13,8 +13,9 @@ class CreateAlatBantuTanamenTable extends Migration
      */
     public function up()
     {
-        Schema::create('alat_bantu_tanamen', function (Blueprint $table) {
+        Schema::create('alat_bantu_tanaman', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_jenistanaman');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateAlatBantuTanamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alat_bantu_tanamen');
+        Schema::dropIfExists('alat_bantu_tanaman');
     }
 }

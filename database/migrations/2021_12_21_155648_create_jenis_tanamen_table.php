@@ -13,8 +13,10 @@ class CreateJenisTanamenTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis_tanamen', function (Blueprint $table) {
+        Schema::create('jenis_tanaman', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_jenistanaman');
+            $table->integer('harga_jual');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateJenisTanamenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis_tanamen');
+        Schema::dropIfExists('jenis_tanaman');
     }
 }

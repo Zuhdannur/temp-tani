@@ -13,8 +13,12 @@ class CreateAnggaransTable extends Migration
      */
     public function up()
     {
-        Schema::create('anggarans', function (Blueprint $table) {
+        Schema::create('anggaran', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_kebun');
+            $table->bigInteger('total_biaya_keseluruhan')->default(0);
+            $table->bigInteger('pendapatan')->default(0);
+            $table->bigInteger('keuntungan')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateAnggaransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggarans');
+        Schema::dropIfExists('anggaran');
     }
 }

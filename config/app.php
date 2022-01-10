@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'jwt_secret' => env('JWT_SECRET', 'hitungtani'),
 
     /*
     |--------------------------------------------------------------------------

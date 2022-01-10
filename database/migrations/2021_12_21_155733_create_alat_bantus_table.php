@@ -13,8 +13,10 @@ class CreateAlatBantusTable extends Migration
      */
     public function up()
     {
-        Schema::create('alat_bantus', function (Blueprint $table) {
+        Schema::create('alat_bantu', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_alatbantu');
+            $table->string('deskripsi_alatbantu');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateAlatBantusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alat_bantus');
+        Schema::dropIfExists('alat_bantu');
     }
 }

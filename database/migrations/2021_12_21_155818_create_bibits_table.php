@@ -13,8 +13,13 @@ class CreateBibitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('bibits', function (Blueprint $table) {
+        Schema::create('bibit', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('id_jenis_tanaman');
+            $table->string('wujud_produksi');
+            $table->string('satuan_bibit');
+            $table->integer('harga_bibit');
+            $table->date('tanggal_update');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ class CreateBibitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bibits');
+        Schema::dropIfExists('bibit');
     }
 }
