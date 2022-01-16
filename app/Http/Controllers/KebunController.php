@@ -13,9 +13,9 @@ class KebunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return Response::success(null, Model::where('id_user', $request->authenticatedUser->id)->get());
     }
 
     /**
@@ -85,9 +85,27 @@ class KebunController extends Controller
      * @param  \App\Models\Kebun  $kebun
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kebun $kebun)
+    public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            'nama_kebun' => 'required',
+            'alamat' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'id_jenistanaman' => 'required',
+            'luas_lahan' => 'required',
+            'jarak_tanam' => 'required',
+            'waktu_penanaman' => 'required',
+            'hasil_panen_per_ubin' => 'required',
+            'harga_satuan_per_hasil_panen' => 'required'
+        ]);
+        if ($validation->fails()) return Response::error('Please fulfill the form properly!', ['validation' => $validation->errors()]);
+        
+        $model = Model::find($id);
+        if (!$model) return Response::error('Kebun tidak ditemukan!');
+        $model->update($input);
+        return Response::success('Kebun berhasil diperbaharui!', $model);
     }
 
     /**
@@ -96,8 +114,11 @@ class KebunController extends Controller
      * @param  \App\Models\Kebun  $kebun
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kebun $kebun)
+    public function destroy($id)
     {
-        //
+        $model = Model::find($id);
+        if (!$model) return Response::error('Kebun tidak ditemukan!');
+        $model->delete();
+        return Response::success('Kebun berhasil dihapus!');
     }
 }

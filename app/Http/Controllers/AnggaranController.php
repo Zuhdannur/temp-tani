@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anggaran;
+use App\Models\Anggaran as Model;
 use Illuminate\Http\Request;
+use App\Lib\Response;
 
 class AnggaranController extends Controller
 {
@@ -35,7 +36,10 @@ class AnggaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            ''
+        ]);
     }
 
     /**

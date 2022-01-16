@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\JenisTanaman;
+use App\Models\JenisTanaman as Model;
 use Illuminate\Http\Request;
+use App\Lib\Response;
 
 class JenisTanamanController extends Controller
 {
@@ -14,7 +15,7 @@ class JenisTanamanController extends Controller
      */
     public function index()
     {
-        //
+        return Response::success(null, Model::all());
     }
 
     /**
