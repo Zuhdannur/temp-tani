@@ -35,27 +35,39 @@ class DetailAnggaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            'tahun' => 'required',
+            'id_kebun' => 'required'
+        ]);
+
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
+        
+        $anggaran = Model::create($input);
+
+        return Response::success('Anggaran berhasil dibuat!', $anggaran);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DetailAnggaran  $detailAnggaran
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function show(DetailAnggaran $detailAnggaran)
+    public function show($id)
     {
-        //
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        return Response::success(null, $anggaran);   
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DetailAnggaran  $detailAnggaran
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(DetailAnggaran $detailAnggaran)
+    public function edit(Anggaran $anggaran)
     {
         //
     }
@@ -64,22 +76,39 @@ class DetailAnggaranController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DetailAnggaran  $detailAnggaran
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DetailAnggaran $detailAnggaran)
+    public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            'tahun' => 'required',
+        ]);
+
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
+    
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        
+        $anggaran->tahun = $input['tahun'];
+        $anggaran->save();
+        return Response::success('Anggaran berhasil diperbaharui!', $anggaran);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DetailAnggaran  $detailAnggaran
+     * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DetailAnggaran $detailAnggaran)
+    public function destroy($id)
     {
-        //
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        
+        $anggaran->delete();
+        
+        return Response::success('Anggaran berhasil dihapus!');
     }
 }

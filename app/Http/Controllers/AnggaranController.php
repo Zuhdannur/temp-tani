@@ -13,9 +13,10 @@ class AnggaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $anggaran = Model::whereIdKebun($request->id_kebun)->orderBy('tahun', 'desc')->get();
+        return Response::success(null, $anggaran);
     }
 
     /**
@@ -44,6 +45,9 @@ class AnggaranController extends Controller
 
         if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
         
+        $isAlreadyExists = Model::whereIdKebun($request->id_kebun)->whereTahun($request->tahun)->first();
+        if ($isAlreadyExists) return Response::error('Anggaran untuk tahun tersebut sudah ada.');
+
         $anggaran = Model::create($input);
 
         return Response::success('Anggaran berhasil dibuat!', $anggaran);
@@ -57,7 +61,9 @@ class AnggaranController extends Controller
      */
     public function show($id)
     {
-        return Response::success(null, Model::find($id));   
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        return Response::success(null, $anggaran);   
     }
 
     /**
@@ -89,6 +95,9 @@ class AnggaranController extends Controller
     
         $anggaran = Model::find($id);
         if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+
+        $isAlreadyExists = Model::whereTahun($request->tahun)->where('id', '!=', $id)->first();
+        if ($isAlreadyExists) return Response::error('Anggaran untuk tahun tersebut sudah ada.');
         
         $anggaran->tahun = $input['tahun'];
         $anggaran->save();
