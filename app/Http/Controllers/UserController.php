@@ -17,7 +17,7 @@ class UserController extends Controller
             'telepon' => 'required|numeric',
             'password' => 'required',
         ]);
-        if ($validation->fails()) return Response::error('Please fulfill the form properly!', ['validation' => $validation->errors()]);
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai!', ['validation' => $validation->errors()]);
 
         $isAlreadyExists = Model::whereEmail($request->email)->first();
         if ($isAlreadyExists) return Response::error('Email already exists!');

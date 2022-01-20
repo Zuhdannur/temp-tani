@@ -49,7 +49,7 @@ class KebunController extends Controller
             'hasil_panen_per_ubin' => 'required',
             'harga_satuan_per_hasil_panen' => 'required'
         ]);
-        if ($validation->fails()) return Response::error('Please fulfill the form properly!', ['validation' => $validation->errors()]);
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai!', ['validation' => $validation->errors()]);
 
         $input['id_user'] = $request->authenticatedUser->id;
         $kebun = Model::create($input);
@@ -100,7 +100,7 @@ class KebunController extends Controller
             'hasil_panen_per_ubin' => 'required',
             'harga_satuan_per_hasil_panen' => 'required'
         ]);
-        if ($validation->fails()) return Response::error('Please fulfill the form properly!', ['validation' => $validation->errors()]);
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai!', ['validation' => $validation->errors()]);
         
         $model = Model::find($id);
         if (!$model) return Response::error('Kebun tidak ditemukan!');

@@ -38,8 +38,15 @@ class AnggaranController extends Controller
     {
         $input = $request->all();
         $validation = \Validator::make($input, [
-            ''
+            'tahun' => 'required',
+            'id_kebun' => 'required'
         ]);
+
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
+        
+        $anggaran = Model::create($input);
+
+        return Response::success('Anggaran berhasil dibuat!', $anggaran);
     }
 
     /**
@@ -48,9 +55,9 @@ class AnggaranController extends Controller
      * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function show(Anggaran $anggaran)
+    public function show($id)
     {
-        //
+        return Response::success(null, Model::find($id));   
     }
 
     /**
@@ -71,9 +78,21 @@ class AnggaranController extends Controller
      * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Anggaran $anggaran)
+    public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $validation = \Validator::make($input, [
+            'tahun' => 'required',
+        ]);
+
+        if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
+    
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        
+        $anggaran->tahun = $input['tahun'];
+        $anggaran->save();
+        return Response::success('Anggaran berhasil diperbaharui!', $anggaran);
     }
 
     /**
@@ -82,8 +101,13 @@ class AnggaranController extends Controller
      * @param  \App\Models\Anggaran  $anggaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Anggaran $anggaran)
+    public function destroy($id)
     {
-        //
+        $anggaran = Model::find($id);
+        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        
+        $anggaran->delete();
+        
+        return Response::success('Anggaran berhasil dihapus!');
     }
 }
