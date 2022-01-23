@@ -25,6 +25,10 @@ class User extends Authenticatable
         'role',
     ];
 
+    protected $casts = [
+        'role' => 'int',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
