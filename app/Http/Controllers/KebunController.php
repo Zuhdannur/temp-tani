@@ -15,7 +15,7 @@ class KebunController extends Controller
      */
     public function index(Request $request)
     {
-        return Response::success(null, Model::where('id_user', $request->authenticatedUser->id)->get());
+        return Response::success(null, Model::with("jenis_tanaman")->where('id_user', $request->authenticatedUser->id)->get());
     }
 
     /**
@@ -62,9 +62,11 @@ class KebunController extends Controller
      * @param  \App\Models\Kebun  $kebun
      * @return \Illuminate\Http\Response
      */
-    public function show(Kebun $kebun)
+    public function show($id)
     {
-        //
+        $kebun = Model::with('jenis_tanaman')->find($id);
+        if (!$kebun) return Response::error('Kebun tidak ditemukan!');
+        return Response::success(null, $kebun);
     }
 
     /**
@@ -101,7 +103,7 @@ class KebunController extends Controller
             'harga_satuan_per_hasil_panen' => 'required'
         ]);
         if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai!', ['validation' => $validation->errors()]);
-        
+
         $model = Model::find($id);
         if (!$model) return Response::error('Kebun tidak ditemukan!');
         $model->update($input);
