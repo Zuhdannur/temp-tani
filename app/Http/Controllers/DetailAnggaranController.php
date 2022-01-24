@@ -16,7 +16,7 @@ class DetailAnggaranController extends Controller
     
     public function index(Request $request)
     {
-        $anggaran = Model::whereIdAnggaran($request->id_anggaran)->orderBy('nama_kategori', 'asc')->get();
+        $anggaran = Model::whereIdAnggaran($request->id_anggaran)->orderBy('nama_kategori', 'asc')->with('item_anggaran')->get();
         return Response::success(null, $anggaran);
     }
 
@@ -51,7 +51,7 @@ class DetailAnggaranController extends Controller
 
         $anggaran = Model::create($input);
 
-        return Response::success('Detial anggaran berhasil dibuat!', $anggaran);
+        return Response::success('Detail anggaran berhasil dibuat!', $anggaran);
     }
 
     /**
@@ -62,7 +62,7 @@ class DetailAnggaranController extends Controller
      */
     public function show($id)
     {
-        $anggaran = Model::find($id);
+        $anggaran = Model::with('item_anggaran')->find($id);
         if (!$anggaran) return Response::error('Detail anggaran tidak ditemukan!');
         return Response::success(null, $anggaran);   
     }

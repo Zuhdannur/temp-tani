@@ -16,7 +16,7 @@ class ItemAnggaranController extends Controller
     
     public function index(Request $request)
     {
-        $anggaran = Model::whereIdKategori($request->id_kategori)->orderBy('nama_sub_kategori', 'asc')->get();
+        $anggaran = Model::whereIdKategori($request->id_kategori)->orderBy('nama_sub_kategori', 'asc')->with('barang')->get();
         return Response::success(null, $anggaran);
     }
 
@@ -62,7 +62,7 @@ class ItemAnggaranController extends Controller
      */
     public function show($id)
     {
-        $anggaran = Model::find($id);
+        $anggaran = Model::with('barang')->find($id);
         if (!$anggaran) return Response::error('Item anggaran tidak ditemukan!');
         return Response::success(null, $anggaran);   
     }

@@ -15,7 +15,7 @@ class AnggaranController extends Controller
      */
     public function index(Request $request)
     {
-        $anggaran = Model::whereIdKebun($request->id_kebun)->orderBy('tahun', 'desc')->get();
+        $anggaran = Model::whereIdKebun($request->id_kebun)->orderBy('tahun', 'desc')->with('detail_anggaran')->get();
         return Response::success(null, $anggaran);
     }
 
@@ -61,7 +61,7 @@ class AnggaranController extends Controller
      */
     public function show($id)
     {
-        $anggaran = Model::find($id);
+        $anggaran = Model::with('detail_anggaran')->find($id);
         if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
         return Response::success(null, $anggaran);   
     }
