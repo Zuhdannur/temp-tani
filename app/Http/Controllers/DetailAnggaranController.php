@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailAnggaran;
+use App\Models\DetailAnggaran as Model;
 use Illuminate\Http\Request;
+use App\Lib\Response;
 
 class DetailAnggaranController extends Controller
 {
@@ -12,9 +13,11 @@ class DetailAnggaranController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    
+    public function index(Request $request)
     {
-        //
+        $anggaran = Model::whereIdAnggaran($request->id_anggaran)->orderBy('nama_kategori', 'asc')->get();
+        return Response::success(null, $anggaran);
     }
 
     /**
@@ -37,15 +40,18 @@ class DetailAnggaranController extends Controller
     {
         $input = $request->all();
         $validation = \Validator::make($input, [
-            'tahun' => 'required',
-            'id_kebun' => 'required'
+            'nama_kategori' => 'required',
+            'id_anggaran' => 'required'
         ]);
 
         if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
         
+        $isAlreadyExists = Model::whereIdAnggaran($request->id_anggaran)->whereNamaKategori($request->nama_kategori)->first();
+        if ($isAlreadyExists) return Response::error('Nama detail anggaran sudah digunakan.');
+
         $anggaran = Model::create($input);
 
-        return Response::success('Anggaran berhasil dibuat!', $anggaran);
+        return Response::success('Detial anggaran berhasil dibuat!', $anggaran);
     }
 
     /**
@@ -57,7 +63,7 @@ class DetailAnggaranController extends Controller
     public function show($id)
     {
         $anggaran = Model::find($id);
-        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        if (!$anggaran) return Response::error('Detail anggaran tidak ditemukan!');
         return Response::success(null, $anggaran);   
     }
 
@@ -83,17 +89,20 @@ class DetailAnggaranController extends Controller
     {
         $input = $request->all();
         $validation = \Validator::make($input, [
-            'tahun' => 'required',
+            'nama_kategori' => 'required',
         ]);
 
         if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai.', ['validation' => $validation->errors()]);
     
         $anggaran = Model::find($id);
-        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        if (!$anggaran) return Response::error('Detail anggaran tidak ditemukan!');
+
+        $isAlreadyExists = Model::whereNamaKategori($request->nama_kategori)->where('id', '!=', $id)->first();
+        if ($isAlreadyExists) return Response::error('Nama detail anggaran sudah digunakan.');
         
-        $anggaran->tahun = $input['tahun'];
+        $anggaran->nama_kategori = $input['nama_kategori'];
         $anggaran->save();
-        return Response::success('Anggaran berhasil diperbaharui!', $anggaran);
+        return Response::success('Detail anggaran berhasil diperbaharui!', $anggaran);
     }
 
     /**
@@ -105,7 +114,7 @@ class DetailAnggaranController extends Controller
     public function destroy($id)
     {
         $anggaran = Model::find($id);
-        if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        if (!$anggaran) return Response::error('Detail anggaran tidak ditemukan!');
         
         $anggaran->delete();
         
