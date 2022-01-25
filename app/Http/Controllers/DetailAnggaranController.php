@@ -101,6 +101,7 @@ class DetailAnggaranController extends Controller
         if ($isAlreadyExists) return Response::error('Nama detail anggaran sudah digunakan.');
         
         $anggaran->nama_kategori = $input['nama_kategori'];
+        $anggaran->deskripsi = $input['deskripsi'];
         $anggaran->save();
         return Response::success('Detail anggaran berhasil diperbaharui!', $anggaran);
     }

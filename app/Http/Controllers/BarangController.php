@@ -110,6 +110,7 @@ class BarangController extends Controller
         $barang->kuantitas = $input['kuantitas'];
         $barang->satuan = $input['satuan'];
         $barang->jumlah_biaya = $input['jumlah_biaya'];
+        $barang->deskripsi = $input['deskripsi'];
         $barang->save();
         return Response::success('Barang berhasil diperbaharui!', $barang);
     }

@@ -101,6 +101,7 @@ class ItemAnggaranController extends Controller
         if ($isAlreadyExists) return Response::error('Nama item anggaran sudah digunakan.');
         
         $anggaran->nama_sub_kategori = $input['nama_sub_kategori'];
+        $anggaran->deskripsi = $input['deskripsi'];
         $anggaran->save();
         return Response::success('Item anggaran berhasil diperbaharui!', $anggaran);
     }
