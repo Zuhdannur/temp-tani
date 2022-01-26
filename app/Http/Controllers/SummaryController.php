@@ -47,12 +47,15 @@ class SummaryController extends Controller
      */
     public function show($id)
     {
-        $anggaran = Anggaran::with('detail_anggaran.item_anggaran.barang')->find($id);
+        $anggaran = Anggaran::with(['detail_anggaran.item_anggaran.barang', 'kebun'])->find($id);
         if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
+        $pendapatan = $anggaran->kebun->perkiraan_jumlah_hasil_panen * $anggaran->kebun->harga_satuan_per_hasil_panen;
+        $keuntungan = $pendapatan - $anggaran->total_biaya_keseluruhan;
+        $pengeluaran = $anggaran->total_biaya_keseluruhan;
         return Response::success(null, [
-            "keuntungan"=> 0,
-            "pendapatan"=> 0,
-            "pengeluaran"=> 0,
+            "keuntungan"=> $keuntungan,
+            "pendapatan"=> $pendapatan,
+            "pengeluaran"=> $pengeluaran,
             "anggaran"=> $anggaran
         ]); 
     }

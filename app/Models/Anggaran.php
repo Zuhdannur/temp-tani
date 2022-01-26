@@ -14,6 +14,10 @@ class Anggaran extends Model
     public function detail_anggaran() {
         return $this->hasMany(DetailAnggaran::class, 'id_anggaran', 'id');
     }
+
+    public function kebun() {
+        return $this->belongsTo(Kebun::class, 'id_kebun', 'id');
+    }
     
     public function getTotalBiayaKeseluruhanAttribute() {
         $rows = \App\Models\DetailAnggaran::where('id_anggaran', $this->id)->get();

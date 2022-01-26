@@ -23,7 +23,7 @@ class Kebun extends Model
     }
 
     public function getPerkiraanJumlahHasilPanenAttribute($value) {
-        $jumlahPanen = $this->total_populasi_tanaman * $this->harga_satuan_per_hasil_panen;
+        $jumlahPanen = $this->total_populasi_tanaman * $this->hasil_panen_per_ubin;
         return $jumlahPanen;
     }
 }
