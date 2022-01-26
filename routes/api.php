@@ -9,6 +9,7 @@ use App\Http\Controllers\DetailAnggaranController;
 use App\Http\Controllers\ItemAnggaranController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\JenisTanamanController;
+use App\Http\Controllers\SummaryController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
@@ -40,4 +41,6 @@ Route::group(['middleware' => 'accessToken'], function(){
     Route::delete('/barang/{id}', [BarangController::class, 'destroy']);
 
     Route::get('/jenis_tanaman', [JenisTanamanController::class, 'index']);
+
+    Route::get('/summary/{id}', [SummaryController::class, 'show']);
 });
