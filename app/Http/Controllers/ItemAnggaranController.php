@@ -97,7 +97,7 @@ class ItemAnggaranController extends Controller
         $anggaran = Model::find($id);
         if (!$anggaran) return Response::error('Item anggaran tidak ditemukan!');
 
-        $isAlreadyExists = Model::whereNamaSubKategori($request->nama_sub_kategori)->where('id', '!=', $id)->first();
+        $isAlreadyExists = Model::whereIdKategori($anggaran->id_kategori)->whereNamaSubKategori($request->nama_sub_kategori)->where('id', '!=', $id)->first();
         if ($isAlreadyExists) return Response::error('Nama item anggaran sudah digunakan.');
         
         $anggaran->nama_sub_kategori = $input['nama_sub_kategori'];

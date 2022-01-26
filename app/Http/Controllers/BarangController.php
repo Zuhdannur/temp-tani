@@ -103,7 +103,7 @@ class BarangController extends Controller
         $barang = Model::find($id);
         if (!$barang) return Response::error('Barang tidak ditemukan!');
 
-        $isAlreadyExists = Model::whereNamaBarang($request->nama_barang)->where('id', '!=', $id)->first();
+        $isAlreadyExists = Model::whereIdSubKategori($barang->id_sub_kategori)->whereNamaBarang($request->nama_barang)->where('id', '!=', $id)->first();
         if ($isAlreadyExists) return Response::error('Nama barang sudah digunakan.');
         
         $barang->nama_barang = $input['nama_barang'];
