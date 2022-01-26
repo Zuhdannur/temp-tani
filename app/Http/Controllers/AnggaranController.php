@@ -96,7 +96,7 @@ class AnggaranController extends Controller
         $anggaran = Model::find($id);
         if (!$anggaran) return Response::error('Anggaran tidak ditemukan!');
 
-        $isAlreadyExists = Model::whereTahun($request->tahun)->where('id', '!=', $id)->first();
+        $isAlreadyExists = Model::whereIdKebun($anggaran->id_kebun)->whereTahun($request->tahun)->where('id', '!=', $id)->first();
         if ($isAlreadyExists) return Response::error('Anggaran untuk tahun tersebut sudah ada.');
         
         $anggaran->tahun = $input['tahun'];

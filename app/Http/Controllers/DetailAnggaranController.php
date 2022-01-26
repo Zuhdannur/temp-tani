@@ -97,10 +97,11 @@ class DetailAnggaranController extends Controller
         $anggaran = Model::find($id);
         if (!$anggaran) return Response::error('Detail anggaran tidak ditemukan!');
 
-        $isAlreadyExists = Model::whereNamaKategori($request->nama_kategori)->where('id', '!=', $id)->first();
+        $isAlreadyExists = Model::whereIdAnggaran($anggaran->id_anggaran)->whereNamaKategori($request->nama_kategori)->where('id', '!=', $id)->first();
         if ($isAlreadyExists) return Response::error('Nama detail anggaran sudah digunakan.');
         
         $anggaran->nama_kategori = $input['nama_kategori'];
+        $anggaran->deskripsi = $input['deskripsi'];
         $anggaran->save();
         return Response::success('Detail anggaran berhasil diperbaharui!', $anggaran);
     }
