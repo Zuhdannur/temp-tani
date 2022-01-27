@@ -50,7 +50,7 @@ class KebunController extends Controller
             'harga_satuan_per_hasil_panen' => 'required'
         ]);
         if ($validation->fails()) return Response::error('Silahkan isi form dengan sesuai!', ['validation' => $validation->errors()]);
-
+        
         $input['id_user'] = $request->authenticatedUser->id;
         $kebun = Model::create($input);
         return Response::success('Kebun berhasil dibuat!', $kebun);

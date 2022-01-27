@@ -50,6 +50,40 @@ class AnggaranController extends Controller
 
         $anggaran = Model::create($input);
 
+        // BIAYA POKOK
+        $detailAnggaran = new \App\Models\DetailAnggaran;
+        $detailAnggaran->nama_kategori = 'Biaya Pokok';
+        $detailAnggaran->id_anggaran = $anggaran->id;
+        $detailAnggaran->save();
+        
+        $itemAnggaran = new \App\Models\ItemAnggaran;
+        $itemAnggaran->nama_sub_kategori = 'Bibit';
+        $itemAnggaran->id_kategori = $detailAnggaran->id;
+        $itemAnggaran->save();
+
+        $itemAnggaran = new \App\Models\ItemAnggaran;
+        $itemAnggaran->nama_sub_kategori = 'Pupuk';
+        $itemAnggaran->id_kategori = $detailAnggaran->id;
+        $itemAnggaran->save();
+        
+        // BIAYA OPERASIONAL
+        $detailAnggaran = new \App\Models\DetailAnggaran;
+        $detailAnggaran->nama_kategori = 'Biaya Operasional';
+        $detailAnggaran->id_anggaran = $anggaran->id;
+        $detailAnggaran->save();
+
+        $itemAnggaran = new \App\Models\ItemAnggaran;
+        $itemAnggaran->nama_sub_kategori = 'Peralatan';
+        $itemAnggaran->id_kategori = $detailAnggaran->id;
+        $itemAnggaran->save();
+
+        $itemAnggaran = new \App\Models\ItemAnggaran;
+        $itemAnggaran->nama_sub_kategori = 'Pekerja';
+        $itemAnggaran->id_kategori = $detailAnggaran->id;
+        $itemAnggaran->save();
+
+        $anggaran = Model::with('detail_anggaran.item_anggaran')->find($anggaran->id);
+
         return Response::success('Anggaran berhasil dibuat!', $anggaran);
     }
 

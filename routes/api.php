@@ -42,5 +42,6 @@ Route::group(['middleware' => 'accessToken'], function(){
 
     Route::get('/jenis_tanaman', [JenisTanamanController::class, 'index']);
 
+    Route::get('/summary/print/{id}', [SummaryController::class, 'print']);
     Route::get('/summary/{id}', [SummaryController::class, 'show']);
 });
